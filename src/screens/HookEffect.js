@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import {  View, Text, FlatList, StyleSheet, Image, ActivityIndicator } from 'react-native';
 
 const HookEffect = () => {
 
@@ -24,29 +24,37 @@ const HookEffect = () => {
 
     return (
       <View style={styles.kingView}>
-        <FlatList 
-          data={userData}
-          renderItem={( {item} ) => {
-            return(
-              <View style={styles.mainView}>
-                <View>
-                  <Image
-                    style={styles.imgStyle}
-                    resizeMode="cover"
-                    source={{uri: item.image}}
-                  />
-                </View>
-                <Text style={styles.textView3}>
-                  Roll No: {item.id < 10 ? `0${item.id}` : `${item.id}`}
-                </Text>
-                <Text style={styles.textView1}>Name: {item.name}</Text>
-                <Text style={styles.textView2}>Email: {item.email}</Text>
-                <Text style={styles.textView2}>Phone: {item.mobile}</Text>
-              </View>
-            )
-          }}
-          showsVerticalScrollIndicator={false}
-        />
+        {
+          isLoaded ? 
+          (<View>
+            <ActivityIndicator/>
+          </View>)
+          : (<View>
+              <FlatList 
+                data={userData}
+                renderItem={( {item} ) => {
+                  return(
+                    <View style={styles.mainView}>
+                      <View>
+                        <Image
+                          style={styles.imgStyle}
+                          //resizeMode="cover"
+                          source={{uri: item.image}}
+                        />
+                      </View>
+                      <Text style={styles.textView3}>
+                        Roll No: {item.id < 10 ? `0${item.id}` : `${item.id}`}
+                      </Text>
+                      <Text style={styles.textView1}>Name: {item.name}</Text>
+                      <Text style={styles.textView2}>Email: {item.email}</Text>
+                      <Text style={styles.textView2}>Phone: {item.mobile}</Text>
+                    </View>
+                  )
+                }}
+                showsVerticalScrollIndicator={false}
+              />
+        </View>)
+        }
       </View>
     );
   }
